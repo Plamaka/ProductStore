@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Product>
+
+
+<h1>Products</h1>
+@foreach(var item in Model)
+{
+    <div>
+        <h6>Product Number</h6>
+        <p>@item.Name</p>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+            <button class="align-items-md-center"><a asp-area="" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">Edit</a> </button>
+            <div>
+                <button>
+                    <a asp-area="" asp-controller="Product" asp-action="Create">Create</a>
+                </button>
+            </div>
+        }
+        <button class="align-items-md-start"><a asp-area="" asp-controller="Product" asp-action="detail" asp-route-id="@item.Id">Viwe</a> </button>
+    </div>
+}
+
+

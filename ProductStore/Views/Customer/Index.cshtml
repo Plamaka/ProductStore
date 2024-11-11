@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Customer>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<div>
+    @foreach (var item in Model)
+    {
+        <div>
+            <h6>Custumer Number @item.Id</h6>
+            <p>@item.FirstName</p>
+            <a class="button" asp-controller="Customer" asp-action="Detail">Detail</a>
+        </div>
+    }  
+</div>
