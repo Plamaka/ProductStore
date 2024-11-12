@@ -6,8 +6,8 @@
 
         public int TagId { get; set; }
 
-        public Post Post { get; set; } = new Post();
+        public Post Post { get; set; }
 
-        public Tag Tag { get; set; } = new Tag();
+        public Tag Tag { get; set; }
     }
 }
