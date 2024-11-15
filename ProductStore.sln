@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductStore", "ProductStore\ProductStore.csproj", "{76B2D525-AE69-4DD6-A835-B5C564323EE3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meny To Meny Relationship in MVC", "Meny To Meny Relationship in MVC\Meny To Meny Relationship in MVC.csproj", "{4ED0AFB1-6E04-4A76-8EFA-5A42B52B1385}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meny_To_Meny_Relationship_in_MVC", "Meny To Meny Relationship in MVC\Meny_To_Meny_Relationship_in_MVC.csproj", "{4ED0AFB1-6E04-4A76-8EFA-5A42B52B1385}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

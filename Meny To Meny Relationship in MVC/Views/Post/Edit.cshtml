@@ -1,0 +1,56 @@
+﻿@model Meny_To_Meny_Relationship_in_MVC.ViewModel.EditPostViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Tags</label>
+                <div>
+                    @foreach (var item in Model.Tags)
+                    {
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="SelectedTagIds" value="@item.Id"
+                            @(Model.SelectedTagIds != null && Model.SelectedTagIds.Contains(item.Id) ? "checked" : "") />
+                            <label class="form-check-label">@item.Title</label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

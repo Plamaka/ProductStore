@@ -8,6 +8,7 @@ namespace Meny_To_Meny_Relationship_in_MVC.ViewModel
 {
     public class CreatePostViewModel
     {
+
         [Required]
         public string Title { get; set; } 
 

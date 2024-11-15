@@ -38,7 +38,7 @@ namespace Meny_To_Meny_Relationship_in_MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Faild to create Tag!");
+                ModelState.AddModelError("", "Failed to create Tag!");
                 return View("Error", tagVM);
             }
 
@@ -82,7 +82,7 @@ namespace Meny_To_Meny_Relationship_in_MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Faild to Edit product!");
+                ModelState.AddModelError("", "Failed to Edit product!");
                 return View("Error", tagVM);
             }
 

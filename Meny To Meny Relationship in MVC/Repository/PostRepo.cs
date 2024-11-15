@@ -14,10 +14,14 @@ namespace Meny_To_Meny_Relationship_in_MVC.Repository
             _context = context;
         }
 
-        public bool Save()
+        public IEnumerable<Post> GetAll()
         {
-            var saved = _context.SaveChanges();
-            return saved > 0 ? true : false;
+            return _context.Posts.ToList();
+        }
+
+        public Post GetById(int id)
+        {
+            return _context.Posts.Include(p => p.PostTags).ThenInclude(pt => pt.Tag).FirstOrDefault(m => m.Id == id);
         }
 
         public bool CreatePostTag(PostTag postTag)
@@ -35,19 +39,7 @@ namespace Meny_To_Meny_Relationship_in_MVC.Repository
         {
             _context.Posts.Add(post);
             return Save();
-        }
-
-        public IEnumerable<Post> GetAll()
-        {
-            return _context.Posts.Include(p => p.PostTags)
-                .ThenInclude(t => t.Tag)
-                .OrderByDescending(p => p.Id);
-        }
-
-        public Post GetById(int id)
-        {
-            return _context.Posts.FirstOrDefault(p => p.Id == id);
-        }
+        }      
 
         public bool Delete(Post post)
         {
@@ -59,6 +51,13 @@ namespace Meny_To_Meny_Relationship_in_MVC.Repository
         {
             _context.Posts.Update(post);
             return Save();
+        }
+
+        public bool Save()
+        {
+            
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }
