@@ -6,8 +6,6 @@ using Microsoft.CodeAnalysis;
 
 namespace Meny_To_Meny_Relationship_in_MVC.Controllers
 {
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    [IgnoreAntiforgeryToken]
     public class TagController : Controller
     {
         protected readonly ITag _tagRepo;
