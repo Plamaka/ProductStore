@@ -1,0 +1,62 @@
+﻿﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+
+@model Meny_To_Meny_Relationship_in_MVC.ViewModel.DashboardViewModel
+
+@{
+    ViewData["Title"] = "User Dashboard";
+}
+
+<h1>User Dashboard</h1>
+<div>
+    <button>
+        <a asp-area="" asp-controller="Post" asp-action="Create">Create New Post</a>
+    </button>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+    {
+        <button>
+            <a asp-area="" asp-controller="Tag" asp-action="Create">Create New Post</a>
+        </button>
+    }
+</div>
+<h2>Your Post</h2>
+<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <p>Id</p>
+                </th>
+                <th>
+                    <p>Title</p>
+                </th>
+                <th>
+                    <p>Description</p>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Posts)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a type="btn btn-success" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <a asp-controller="Post" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-controller="Post" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

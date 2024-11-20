@@ -72,32 +72,32 @@ namespace ProductStore.Data
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
-                //var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                ////Roles
-                //if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
-                //    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-                //if (!await roleManager.RoleExistsAsync(UserRoles.User))
-                //    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+                //Roles
+                if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                if (!await roleManager.RoleExistsAsync(UserRoles.User))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-                ////Users
+                //Users
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-                //string adminUserEmail = "mineset@abv.bg";
+                string adminUserEmail = "mineset@abv.bg";
 
-                //var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
-                //if (adminUser == null)
-                //{
-                //    var newAdminUser = new AppUser();
-                //    newAdminUser.Pace = 0;
-                //    newAdminUser.Mileage = 0;
-                //    newAdminUser.UserName = "Miogre";
-                //    newAdminUser.Email = adminUserEmail;
-                //    newAdminUser.EmailConfirmed = true;
-                    
-                    
-                //    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
-                //    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
-                //}
+                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
+                if (adminUser == null)
+                {
+                    var newAdminUser = new AppUser();
+                    newAdminUser.Pace = 0;
+                    newAdminUser.Mileage = 0;
+                    newAdminUser.UserName = "Miogre";
+                    newAdminUser.Email = adminUserEmail;
+                    newAdminUser.EmailConfirmed = true;
+
+
+                    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
+                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
+                }
 
                 string appUserEmail = "p.panushev@abv.bg";
 
@@ -111,7 +111,7 @@ namespace ProductStore.Data
                     newAppUser.Email = appUserEmail;
                     newAppUser.EmailConfirmed = true;
 
-                    await userManager.CreateAsync( newAppUser, "12binok21");
+                    await userManager.CreateAsync( newAppUser, "Coding@12345?");
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
 

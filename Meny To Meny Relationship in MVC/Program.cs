@@ -19,6 +19,7 @@ namespace Meny_To_Meny_Relationship_in_MVC
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IPost, PostRepo>();
             builder.Services.AddScoped<ITag, TagRepo>();
+            builder.Services.AddScoped<IDashboard, DashboardRepo>();
             builder.Services.AddDbContext<MenyToMenyContext>(options
                 => options.UseSqlServer(builder.Configuration.GetConnectionString("MenyToMenyConnection"))
             );

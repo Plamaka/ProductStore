@@ -3,6 +3,7 @@ using Meny_To_Meny_Relationship_in_MVC.Models;
 using Meny_To_Meny_Relationship_in_MVC.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Meny_To_Meny_Relationship_in_MVC.Controllers
 {
@@ -38,7 +39,6 @@ namespace Meny_To_Meny_Relationship_in_MVC.Controllers
             var user = await _userManager.FindByEmailAsync(loginViewModel.EmailAddress);
             if (user != null)
             {
-                
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
                 if(passwordCheck)
                 {

@@ -14,7 +14,9 @@ namespace Meny_To_Meny_Relationship_in_MVC.Models
         [Column(TypeName = "NVARCHAR(450)")]
         public string Description { get; set; } = null!;
 
-        public ICollection<AppUser> AppUsers { get; set; } = null!;
+        public string? UserId { get; set; }
+
+        public AppUser? User { get; set; }
 
         public ICollection<PostTag> PostTags { get; set; } = new List<PostTag>();
 

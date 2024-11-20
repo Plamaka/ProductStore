@@ -1,19 +1,25 @@
 ﻿using Meny_To_Meny_Relationship_in_MVC.Intefaces;
 using Meny_To_Meny_Relationship_in_MVC.Models;
 using Meny_To_Meny_Relationship_in_MVC.ViewModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Meny_To_Meny_Relationship_in_MVC.Controllers
 {
     public class PostController : Controller
     {
         protected readonly IPost _postRepo;
+        protected readonly UserManager<AppUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public PostController(IPost postRepo)
+        public PostController(IPost postRepo, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManager)
         {
             _postRepo = postRepo;
+            _httpContextAccessor = httpContextAccessor;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -35,6 +41,7 @@ namespace Meny_To_Meny_Relationship_in_MVC.Controllers
                 Tags = _postRepo.GetAllTags().ToList()
             };
             return View(postVM);
+    
         }
 
         [HttpPost]
@@ -42,14 +49,17 @@ namespace Meny_To_Meny_Relationship_in_MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError("", "Failed to create Tag!");
+                ModelState.AddModelError("", "Failed to create Post!");
                 return View("Error", postVM);
             }
+
+            var curUserID = _userManager.GetUserId(User);
 
             var post = new Post
             {
                 Title = postVM.Title,
-                Description = postVM.Description
+                Description = postVM.Description,
+                UserId = curUserID
             };
 
             _postRepo.Add(post);

@@ -31,8 +31,8 @@ namespace Meny_To_Meny_Relationship_in_MVC.Data
             modelBuilder.Entity<PostTag>()
                 .HasOne(pt => pt.Tag).WithMany(pt => pt.PostTags).HasForeignKey(pt => pt.TagId);
 
-            modelBuilder.Entity<AppUser>()
-                .HasOne(au => au.Post).WithMany(au => au.AppUsers).HasForeignKey(au => au.PostId);
+            modelBuilder.Entity<Post>()
+                .HasOne(au => au.User).WithMany(au => au.Posts).HasForeignKey(au => au.UserId);
         }
     }
 }
