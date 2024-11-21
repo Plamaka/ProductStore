@@ -6,7 +6,7 @@ namespace ProductStore.Interface
     {
         Task<IEnumerable<Customer>> GetAll();
 
-        Task<Customer> GetByIdCustomer(int id);
+        Task<Customer> GetByIdCustomer(string id);
 
         bool Add(Customer customer);
 

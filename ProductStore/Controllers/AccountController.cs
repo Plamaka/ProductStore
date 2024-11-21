@@ -1,22 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using ProductStore.Data;
 using ProductStore.Models;
 using ProductStore.ViewModels;
+using System.Security.Claims;
 
 namespace ProductStore.Controllers
 {
 
     public class AccountController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
-        private readonly StoreContext _context;
+        private readonly UserManager<Customer> _userManager;
+        private readonly SignInManager<Customer> _signInManager;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManeger, StoreContext context)
+        public AccountController(UserManager<Customer> userManager, SignInManager<Customer> signInManeger, StoreContext context)
         {
-            _context = context;
             _signInManager = signInManeger;
             _userManager = userManager;
         }
@@ -39,7 +37,6 @@ namespace ProductStore.Controllers
             var user = await _userManager.FindByEmailAsync(loginViewModel.EmailAddress);
             if (user != null)
             {
-                
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
                 if(passwordCheck)
                 {
@@ -47,7 +44,7 @@ namespace ProductStore.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index","Product");
+                        return RedirectToAction("Index","Home");
                     }
                 }
                 //password is incorect
@@ -73,15 +70,17 @@ namespace ProductStore.Controllers
             var user = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
             if (user != null)
             {
-                TempData["Error"] = "This email alredi has a account";
+                TempData["Error"] = "This email already has a account";
                 return View(registerViewModel);
             }
 
-            var newUser = new AppUser
+            var newUser = new Customer
             {
-                Mileage = 0,
-                Pace = 0,
                 Email = registerViewModel.EmailAddress,
+                FirstName = registerViewModel.FirstName,
+                LastName = registerViewModel.LastName,
+                Address = registerViewModel.Address,
+                Phone = registerViewModel.Phone,
                 UserName = registerViewModel.EmailAddress
             };
             var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);

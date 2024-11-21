@@ -5,6 +5,6 @@ namespace ProductStore.Interface
 {
     public interface IDashboard
     {
-        Task<List<Order>> GetAllOrders();
+        List<Order> GetAllUserOrders();
     }
 }

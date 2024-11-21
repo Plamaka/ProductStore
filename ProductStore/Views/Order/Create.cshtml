@@ -1,0 +1,44 @@
+﻿@model ProductStore.ViewModels.CreateOrderViewModel
+
+
+<h1>Order</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Price)
+            </td>
+            <form method="post" asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <td>
+                <input type="hidden" asp-for="ProductId" />
+                <input type="hidden" asp-for="OrderPlaced" />
+                <div class="form-group">
+                    <label asp-for="Quantity" class="control-label"></label>
+                    <input asp-for="Quantity" class="form-control" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+            </td>
+            <td>
+                <button type="submit" class="btn btn-primary">Buy</button>
+            </td>
+            </form>
+        </tr>
+    </tbody>
+</table>
+
+<button><a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@Model.ProductId">Back</a> </button>

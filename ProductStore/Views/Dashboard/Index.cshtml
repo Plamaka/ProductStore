@@ -1,7 +1,59 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Customer> SignInManager
+
+@model ProductStore.ViewModels.DashboardViewModel
+
 @{
+    ViewData["Title"] = "User Dashboard";
 }
 
-<h6>Dashboard</h6>
+<h1>User Dashboard</h1>
+<div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+    {
+        <button>
+            <a asp-area="" asp-controller="Product" asp-action="Create">Create New Product</a>
+        </button>
+    }
+</div>
+<h2>Your Order</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <p>Id</p>
+            </th>
+            <th>
+                <p>OrderPlaced</p>
+            </th>
+            <th>
+                <p>OrderFulfulled</p>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Orders)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderPlaced)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderFulfulled)
+                </td>
+                <td>
+                    <a type="btn btn-success" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <a asp-controller="Post" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-controller="Post" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -42,14 +42,14 @@ namespace Meny_To_Meny_Relationship_in_MVC.Controllers
                 var passwordCheck = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
                 if(passwordCheck)
                 {
-                    //password is corect sign in
+                    //password is correct sign in
                     var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Index","Post");
                     }
                 }
-                //password is incorect
+                //password is incorrect
                 TempData["Error"] = "Wrong password. Please, try again";
                 return View(loginViewModel);
             }
@@ -72,7 +72,7 @@ namespace Meny_To_Meny_Relationship_in_MVC.Controllers
             var user = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
             if (user != null)
             {
-                TempData["Error"] = "This email alredi has a account";
+                TempData["Error"] = "This email already has a account";
                 return View(registerViewModel);
             }
 

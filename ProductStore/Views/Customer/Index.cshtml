@@ -1,19 +1,46 @@
 ﻿@model IEnumerable<Customer>
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
+    ViewData["Title"] = "Index";
 }
 
-
-<div>
-    @foreach (var item in Model)
-    {
-        <div>
-            <h6>Custumer Number @item.Id</h6>
-            <p>@item.FirstName</p>
-            <a class="button" asp-controller="Customer" asp-action="Detail">Detail</a>
-        </div>
-    }  
-</div>
+<h1>Index</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+                        <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a asp-area="" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

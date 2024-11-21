@@ -23,26 +23,42 @@ namespace ProductStore.Controllers
             return View(product);
         }
 
-        public async Task<IActionResult> Detail(int id) 
-        {
-            Product product = await _productRepository.GetByIdAsync(id);
-            return View(product);
-        }
-
         public IActionResult Create() 
-        { 
-            return View(); 
+        {
+            var productVM = new ProductViewModel();
+            return View(productVM); 
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Product product)
+        public async Task<IActionResult> Create(ProductViewModel productVm)
         {
             if (!ModelState.IsValid)
             {
-                return View(product);
+                return View(productVm);
             }
-            _productRepository.Add(product);
+
+            var product = new Product
+            {
+                Name = productVm.Name,
+                Price = productVm.Price
+            };
+
+             _productRepository.Add(product);
             return RedirectToAction("Index");
+        }
+
+
+        public async Task<IActionResult> Details(int id)
+        {
+            Product product = await _productRepository.GetByIdAsync(id);
+            if (product == null) { return View("Error"); }
+            var productVM = new EditProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+            };
+            return View(productVM);
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -58,7 +74,7 @@ namespace ProductStore.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, EditProductViewModel productVM)
+        public IActionResult Edit(int id, EditProductViewModel productVM)
         {
             if (!ModelState.IsValid)
             {
@@ -74,6 +90,39 @@ namespace ProductStore.Controllers
             };
 
             _productRepository.Update(srok);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null) { return View("Error"); }
+            var productVM = new EditProductViewModel
+            {
+                Id= id,
+                Name = product.Name,
+                Price = product.Price
+            };
+            return View(productVM);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(EditProductViewModel productVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Faild to Delete product!");
+                return View("Error", productVM);
+            }
+
+            var product = new Product
+            {
+                Id = productVM.Id,
+                Name = productVM.Name,
+                Price = productVM.Price
+            };
+
+            _productRepository.Delete(product);
             return RedirectToAction("Index");
         }
     }

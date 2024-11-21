@@ -31,7 +31,7 @@ namespace ProductStore.Repository
             return await _context.Customers.ToListAsync();
         }
 
-        public async Task<Customer> GetByIdCustomer(int id)
+        public async Task<Customer> GetByIdCustomer(string id)
         {
             return await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
         }

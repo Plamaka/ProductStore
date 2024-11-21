@@ -1,7 +1,5 @@
 ﻿using Meny_To_Meny_Relationship_in_MVC.Intefaces;
-using Meny_To_Meny_Relationship_in_MVC.Models;
 using Meny_To_Meny_Relationship_in_MVC.ViewModel;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Meny_To_Meny_Relationship_in_MVC.Controllers

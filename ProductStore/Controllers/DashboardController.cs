@@ -1,20 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductStore.Interface;
+using ProductStore.ViewModels;
 
 namespace ProductStore.Controllers
 {
     public class DashboardController : Controller
     {
-        private readonly IDashboard _dashboardRepository;
+        protected readonly IDashboard _dashboardRepo;
+        protected readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DashboardController(IDashboard dashboardRepository)
+        public DashboardController(IDashboard dashboardRepo, IHttpContextAccessor httpContextAccessor)
         {
-            _dashboardRepository = dashboardRepository;
+            _dashboardRepo = dashboardRepo;
+            _httpContextAccessor = httpContextAccessor;
         }
-
         public IActionResult Index()
         {
-            return View();
+            var userOrders = _dashboardRepo.GetAllUserOrders();
+            var DashboardVM = new DashboardViewModel()
+            {
+                Orders = userOrders
+            };
+            return View(DashboardVM);
         }
     }
 }

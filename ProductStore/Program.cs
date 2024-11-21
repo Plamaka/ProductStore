@@ -17,23 +17,26 @@ namespace ProductStore
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IProduct, ProductRepository>();
+            builder.Services.AddScoped<IOrder, OrderRepository>();
             builder.Services.AddScoped<ICustomer, CustomerRepository>();
+            builder.Services.AddScoped<IDashboard, DashboardRepository>();
             builder.Services.AddDbContext<StoreContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
-            builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<StoreContext>();
+            builder.Services.AddIdentity<Customer, IdentityRole>().AddEntityFrameworkStores<StoreContext>();
             builder.Services.AddMemoryCache();
             builder.Services.AddSession();
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
 
             var app = builder.Build();
 
-                if (args.Length == 1 && args[0].ToLower() == "seeddata")
-                {
-                //await Seed.SeedUsersAndRolesAsync(app);
+
+            if (args.Length == 1 && args[0].ToLower() == "seeddata")
+            {
+                await Seed.SeedUsersAndRolesAsync(app);
                 //Seed.SeedData(app);
-                }
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -49,7 +52,7 @@ namespace ProductStore
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseAuthentication();
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -22,7 +22,7 @@ namespace ProductStore.Controllers
             return View(customer);
         }
 
-        public async Task<IActionResult> Detail(int id)
+        public async Task<IActionResult> Detail(string id)
         {
             Customer customerId = await _customerRepository.GetByIdCustomer(id);
             return View(customerId);

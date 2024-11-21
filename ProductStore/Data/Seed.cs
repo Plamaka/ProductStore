@@ -11,31 +11,12 @@ namespace ProductStore.Data
             using (var scope = app.Services.CreateScope())
             {
                 using var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
+
                 try
                 {
+                    context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
 
-                    if (!context.Customers.Any())
-                    {
-                        context.Customers.AddRange(
-                            new Customer { FirstName = "Plamen", LastName = "Panushev", Address = "ul. Balak Malak", Phone = "0982549278"},
-                            new Customer { FirstName = "Todor", LastName = "kostov", Address = "ul. Vanka Maska", Phone = "0982029278" },
-                            new Customer { FirstName = "Yordan", LastName = "Vylkov", Address = "ul. Veba Stona", Phone = "0982549178" }
-                            );
-                        
-                        context.SaveChanges();
-                    }
-
-                    if (!context.Orders.Any())
-                    {
-                        context.Orders.AddRange(
-                            new Order { OrderPlaced = DateTime.Now, CustomerId = 1 },
-                            new Order { OrderPlaced = DateTime.Now, CustomerId = 3 },
-                            new Order { OrderPlaced = DateTime.Now, CustomerId = 2 }
-                            );
-
-                        context.SaveChanges();
-                    }
 
                     if (!context.Products.Any())
                     {
@@ -47,23 +28,13 @@ namespace ProductStore.Data
 
                         context.SaveChanges();
                     }
-
-                    if (!context.OrderDetails.Any())
-                    {
-                        context.OrderDetails.AddRange(
-                            new OrderDetail { Quantity = 4, OrderId = 1,ProductId = 2 },
-                            new OrderDetail { Quantity = 1, OrderId = 2, ProductId = 1 },
-                            new OrderDetail { Quantity = 1, OrderId = 3, ProductId = 3 }
-                            );
-
-                        context.SaveChanges();
-                    }
                 }
                 catch (Exception)
                 {
 
                     throw;
                 }
+
                 return app;
             }
         }
@@ -81,16 +52,18 @@ namespace ProductStore.Data
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
                 //Users
-                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<Customer>>();
                 string adminUserEmail = "mineset@abv.bg";
 
                 var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
                 if (adminUser == null)
                 {
-                    var newAdminUser = new AppUser();
-                    newAdminUser.Pace = 0;
-                    newAdminUser.Mileage = 0;
+                    var newAdminUser = new Customer();
                     newAdminUser.UserName = "Miogre";
+                    newAdminUser.FirstName = "Pavel";
+                    newAdminUser.LastName = "Pavlov";
+                    newAdminUser.Address = "ul. Stefan Stambolov 15";
+                    newAdminUser.Phone = "0892355623";
                     newAdminUser.Email = adminUserEmail;
                     newAdminUser.EmailConfirmed = true;
 
@@ -104,14 +77,16 @@ namespace ProductStore.Data
                 var appUser = await userManager.FindByEmailAsync(appUserEmail);
                 if (appUser == null)
                 {
-                    var newAppUser = new AppUser();
-                    newAppUser.Pace = 0;
-                    newAppUser.Mileage = 0;
-                    newAppUser.UserName = "app-user";
+                    var newAppUser = new Customer();
+                    newAppUser.UserName = "Test";
+                    newAppUser.FirstName = "Ivan";
+                    newAppUser.LastName = "Ivanov";
+                    newAppUser.Address = "ul. Stefan Stambolov 34";
+                    newAppUser.Phone = "0872356903";
                     newAppUser.Email = appUserEmail;
                     newAppUser.EmailConfirmed = true;
 
-                    await userManager.CreateAsync( newAppUser, "Coding@12345?");
+                    await userManager.CreateAsync(newAppUser, "Coding@12345?");
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
 
