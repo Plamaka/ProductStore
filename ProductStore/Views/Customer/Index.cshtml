@@ -36,8 +36,7 @@
                 <td>
                     @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
                     {
-                        <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        <a asp-area="" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a asp-area="" asp-controller="Customer" asp-action="Detail" asp-route-id="@item.Id">Details</a>
                     }
                 </td>
             </tr>

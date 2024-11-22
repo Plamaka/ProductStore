@@ -15,16 +15,16 @@ namespace ProductStore.Repository
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public Task<List<Order>> GetAllOrders()
+        public List<Order> GetAllOrders()
         {
-            throw new NotImplementedException();
+            return _context.Orders.ToList();
         }
 
         public List<Order> GetAllUserOrders()
         {
             var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
-            var userPosts = _context.Orders.Where(p => p.Customer.Id == curUser.ToString());
-            return userPosts.ToList();
+            var userOrders = _context.Orders.Where(p => p.Customer.Id == curUser.ToString());
+            return userOrders.ToList();
 
         }
 

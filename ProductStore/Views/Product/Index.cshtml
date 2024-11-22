@@ -2,7 +2,6 @@
 
 
 <h1>Products</h1>
-<button class="align-items-md-start"><a asp-area="" asp-controller="Product" asp-action="Create">Create</a> </button>
 @foreach(var item in Model)
 {
     <div>
@@ -13,9 +12,15 @@
         <div>
             @item.Price
         </div>
-        <button class="align-items-md-center"><a asp-area="" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">Edit</a> </button>
         <button class="align-items-md-start"><a asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a> </button>
+
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+        <button class="align-items-md-center"><a asp-area="" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">Edit</a> </button>
         <button class="align-items-md-start"><a asp-area="" asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id">Delete</a> </button>
+        }
+
+
     </div>
 }
 

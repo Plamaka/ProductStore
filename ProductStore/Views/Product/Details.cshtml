@@ -22,9 +22,19 @@
                 @Html.DisplayFor(model => model.Price)
             </td>
             <td>
-                <button>
-                    <a asp-area="" asp-controller="Order" asp-action="Create" asp-route-productId="@Model.Id">Order</a>
-                </button>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <button>
+                        <a asp-area="" asp-controller="Order" asp-action="Create" asp-route-productId="@Model.Id">Order</a>
+                    </button>
+                }
+                else
+                {
+                    <button>
+                        <a asp-area="" asp-controller="Account" asp-action="Login" asp-route-productId="@Model.Id">Order</a>
+                    </button>
+                }
+               
             </td>
         </tr>
     </tbody>

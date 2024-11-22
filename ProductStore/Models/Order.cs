@@ -9,9 +9,9 @@
         public DateTime? OrderFulfulled { get; set; }
 
         public string? CustomerId { get; set; }
-        public Customer? Customer { get; set; } = null!;
+        public Customer? Customer { get; set; }
 
-        public ICollection<OrderDetail> Orderdetails { get; set; } = null!;
+        public ICollection<OrderDetail> Orderdetails { get; set; } = new List<OrderDetail>();
 
 
 

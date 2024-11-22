@@ -4,6 +4,10 @@ namespace ProductStore.ViewModels
 {
     public class DashboardViewModel
     {
-        public List<Order> Orders { get; set; } = new List<Order>();
+        public List<Order> Orders { get; set; }
+
+        public List<Order> GetAllOrders { get; set; }
+
+        public DateTime FulfilledOrder { get; set; }
     }
 }

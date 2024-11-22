@@ -6,19 +6,22 @@ namespace ProductStore.Controllers
 {
     public class DashboardController : Controller
     {
-        protected readonly IDashboard _dashboardRepo;
+        protected readonly IDashboard _dashboardRepository;
         protected readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DashboardController(IDashboard dashboardRepo, IHttpContextAccessor httpContextAccessor)
+        public DashboardController(IDashboard dashboardRepository, IHttpContextAccessor httpContextAccessor)
         {
-            _dashboardRepo = dashboardRepo;
+            _dashboardRepository = dashboardRepository;
             _httpContextAccessor = httpContextAccessor;
         }
+
         public IActionResult Index()
         {
-            var userOrders = _dashboardRepo.GetAllUserOrders();
+            var orders = _dashboardRepository.GetAllOrders();
+            var userOrders = _dashboardRepository.GetAllUserOrders();
             var DashboardVM = new DashboardViewModel()
             {
+                GetAllOrders = orders,
                 Orders = userOrders
             };
             return View(DashboardVM);
