@@ -44,9 +44,10 @@
                         <td>
                             @if (item.OrderFulfulled == null)
                             {
-                                <form method="post" action="Edit">
+
+                                <form method="post" asp-route-id="@item.Id">
                                     <div>
-                                        <input type="checkbox" name="Order" value="@item.OrderFulfulled" />                                       
+                                        <button type="submit" class="btn btn-primary">IsFulfilled</button>
                                     </div>
                                 </form>
                             }
@@ -91,6 +92,10 @@
                     @Html.DisplayFor(modelItem => item.OrderPlaced)
                 </td>
                 <td>
+                    @if (item.OrderFulfulled == null)
+                    {
+                        <p>Order in process</p>
+                    }
                     @Html.DisplayFor(modelItem => item.OrderFulfulled)
                 </td>
                 <td>

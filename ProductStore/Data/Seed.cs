@@ -68,7 +68,7 @@ namespace ProductStore.Data
                     newAdminUser.EmailConfirmed = true;
 
 
-                    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
+                    await userManager.CreateAsync(newAdminUser, "Aa@1234?");
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
 
@@ -86,7 +86,7 @@ namespace ProductStore.Data
                     newAppUser.Email = appUserEmail;
                     newAppUser.EmailConfirmed = true;
 
-                    await userManager.CreateAsync(newAppUser, "Coding@12345?");
+                    await userManager.CreateAsync(newAppUser, "Aa@1235?");
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
 

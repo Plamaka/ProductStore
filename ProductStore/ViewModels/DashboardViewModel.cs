@@ -7,7 +7,5 @@ namespace ProductStore.ViewModels
         public List<Order> Orders { get; set; }
 
         public List<Order> GetAllOrders { get; set; }
-
-        public DateTime FulfilledOrder { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using ProductStore.Data;
 namespace ProductStore.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20241121205747_Initial")]
+    [Migration("20241212223222_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
